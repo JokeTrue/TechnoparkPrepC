@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     char *path = argv[1];
     FILE *fp = fopen(path, "r");
     if (fp == NULL) {
-        printf("Unable to open file: %s\n", path);
+        printf("Unable to open %s\n", path);
         return EXIT_FAILURE;
     }
 
@@ -22,7 +22,11 @@ int main(int argc, char *argv[]) {
     char ch[MAX_LINES], array[MAX_LINES][MAX_STRING_LENGTH];
     while (fscanf(fp, "%s", ch) == 1) {
         if (strlen(ch) >= MAX_STRING_LENGTH) {
-            printf("String is too long...\n");
+            printf("Line is too long.\n");
+            return EXIT_FAILURE;
+        }
+        if (index > MAX_LINES) {
+            printf("Too many lines, expected less than or equal %d.\n", MAX_LINES);
             return EXIT_FAILURE;
         }
         strcpy(array[index], ch);
