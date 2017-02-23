@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Выбор уникальных строк
+    // Выбор неповторяющихся строк
     for (int f = 0; f < size; f++) {
         int num_occ = 0;
         for (int g = 0; g < size; g++) {
