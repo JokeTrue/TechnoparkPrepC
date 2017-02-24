@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     int index = 0;
     char ch[MAX_LINES], array[MAX_LINES][MAX_STRING_LENGTH];
     while (fscanf(fp, "%s", ch) == 1) {
-        if (strlen(ch) >= MAX_STRING_LENGTH) {
+        if (strlen(ch) > MAX_STRING_LENGTH) {
             printf("Line is too long.\n");
             return EXIT_FAILURE;
         }
