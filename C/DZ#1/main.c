@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    char *path = argv[1];
+    const char *path = argv[1];
     FILE *fp = fopen(path, "r");
     if (fp == NULL) {
         printf("Unable to open %s\n", path);
@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
     }
 
     int index = 0;
-    char ch[MAX_LINES], array[MAX_LINES][MAX_STRING_LENGTH];
-    while (fscanf(fp, "%s", ch) == 1) {
-        if (strlen(ch) >= MAX_STRING_LENGTH) {
+    char line[MAX_LINES], array[MAX_LINES][MAX_STRING_LENGTH];
+    while (fscanf(fp, "%s", line) == 1) {
+        if (strlen(line) >= MAX_STRING_LENGTH) {
             printf("Line is too long.\n");
             return EXIT_FAILURE;
         }
@@ -29,13 +29,13 @@ int main(int argc, char *argv[]) {
             printf("Too many lines, expected less than or equal %d.\n", MAX_LINES);
             return EXIT_FAILURE;
         }
-        strcpy(array[index], ch);
+        strcpy(array[index], line);
         index++;
     }
 
     // Сортировка
-    char tmp[MAX_LINES];
     const int size = index;
+    char tmp[MAX_LINES];
     for (int i = 1; i < size; i++) {
         for (int j = 1; j < size - 1; j++) {
             if (strcmp(array[j - 1], array[j]) > 0) {
