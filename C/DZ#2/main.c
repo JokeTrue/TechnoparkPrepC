@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     const char *path = argv[1];
     FILE *fp = fopen(path, "r");
     if (fp == NULL) {
-        printf("Unable to open %s\n", path);
+        printf("Unable to open %s: %s.\n", path, strerror(errno));
         return EXIT_FAILURE;
     }
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
     double **matrix = malloc(sizeof(double *) * rows);
     if (!matrix) {
-        printf("Can't allocate %zu bytes: %s\n", sizeof(double *) * rows, strerror(errno));
+        printf("Can't allocate %zu bytes: %s.\n", sizeof(double *) * rows, strerror(errno));
         free(matrix);
         fclose(fp);
         return EXIT_FAILURE;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     }
 
     print_matrix((const double **) matrix, cols, rows);
-    transpose(matrix, cols, rows);
+    transpose((const double **) matrix, cols, rows);
 
     for (int i = 0; i < rows; ++i) {
         free(matrix[i]);

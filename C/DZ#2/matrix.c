@@ -19,7 +19,7 @@ void set_elem(double **matrix, int row, int col, double elem) {
     matrix[row][col] = elem;
 }
 
-void transpose(double **matrix, int rows, int cols) {
+void transpose(const double **matrix, const int rows, const int cols) {
     printf("Transposed Matrix:\n");
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
