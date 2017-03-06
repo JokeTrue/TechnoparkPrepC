@@ -41,7 +41,6 @@ int main(int argc, char *argv[]) {
         set_elem(matrix, row, col, value);
     }
 
-    print_matrix((const double **) matrix, cols, rows);
     transpose((const double **) matrix, cols, rows);
 
     for (int i = 0; i < rows; ++i) {

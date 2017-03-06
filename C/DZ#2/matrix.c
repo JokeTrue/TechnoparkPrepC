@@ -1,30 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-void print_matrix(const double **matrix, const int rows, const int cols) {
-    int iter1 = 0;
-    int iter2 = 0;
-    if (rows == cols) {
-        iter1 = rows;
-        iter2 = cols;
-    }
-    if (rows < cols) {
-        iter1 = rows;
-        iter2 = cols;
-    }
-    if (rows > cols) {
-        iter1 = cols;
-        iter2 = rows;
-    }
-    printf("Matrix from file:\n");
-    for (int i = 0; i < iter1; ++i) {
-        for (int j = 0; j < iter2; ++j) {
-            printf("%.2lf\t", matrix[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 double get_elem(const double **matrix, const int row, const int col) {
     return matrix[row][col];
 }
@@ -45,8 +21,8 @@ void transpose(const double **matrix, const int rows, const int cols) {
         iter2 = cols;
     }
     if (rows > cols) {
-        iter1 = cols;
-        iter2 = rows;
+        iter1 = rows;
+        iter2 = cols;
     }
 
     printf("Transposed Matrix:\n");
