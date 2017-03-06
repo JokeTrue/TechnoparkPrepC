@@ -1,7 +1,7 @@
 if __name__ == '__main__':
-    f = open('file1.txt', 'wr+')
-    rows = 150
-    cols = 100
+    f = open('../DZ#2/file1.txt', 'wr+')
+    rows = 15
+    cols = 15
     f.write('{}\n'.format(rows))
     f.write('{}\n'.format(cols))
     f.write('{}\n'.format(rows*cols))

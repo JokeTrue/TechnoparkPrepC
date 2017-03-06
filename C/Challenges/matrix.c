@@ -75,9 +75,23 @@ int get_cols(Matrix *matrix) {
 void print_matrix(Matrix *matrix) {
     int rows = get_rows(matrix);
     int cols = get_cols(matrix);
+    int iter1 = 0;
+    int iter2 = 0;
+    if (rows == cols) {
+        iter1 = rows;
+        iter2 = cols;
+    }
+    if (rows < cols) {
+        iter1 = rows;
+        iter2 = cols;
+    }
+    if (rows > cols) {
+        iter1 = cols;
+        iter2 = rows;
+    }
     int n = 0;
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < iter1; ++i) {
+        for (int j = 0; j < iter2; ++j) {
             printf("%.2lf\t", matrix[n].value);
             n++;
         }
@@ -94,13 +108,13 @@ void transpose(Matrix *matrix) {
         iter1 = rows;
         iter2 = cols;
     }
-    if (rows > cols) {
-        iter1 = cols;
-        iter2 = rows;
-    }
     if (rows < cols) {
         iter1 = rows;
         iter2 = cols;
+    }
+    if (rows > cols) {
+        iter1 = cols;
+        iter2 = rows;
     }
 
     printf("Transposed Matrix:\n");
