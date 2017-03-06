@@ -20,10 +20,25 @@ void set_elem(double **matrix, int row, int col, double elem) {
 }
 
 void transpose(const double **matrix, const int rows, const int cols) {
+    int iter1 = 0;
+    int iter2 = 0;
+    if (rows == cols) {
+        iter1 = rows;
+        iter2 = cols;
+    }
+    if (rows > cols) {
+        iter1 = cols;
+        iter2 = rows;
+    }
+    if (rows < cols) {
+        iter1 = rows;
+        iter2 = cols;
+    }
+
     printf("Transposed Matrix:\n");
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            printf("%.2lf\t", matrix[j][i]);
+    for (int i = 0; i < iter1; i++) {
+        for (int j = 0; j < iter2; j++) {
+            printf("%.2lf\t", get_elem(matrix, j, i));
         }
         printf("\n");
     }
