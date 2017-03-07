@@ -30,4 +30,4 @@ void print_matrix(Matrix *matrix);
 void transpose(Matrix *matrix);
 
 
-#endif //_MATRIX_H_
+#endif

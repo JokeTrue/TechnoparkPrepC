@@ -4,37 +4,39 @@
 #include <errno.h>
 #include "matrix.h"
 
+Matrix *create_matrix(int rows, int cols) {
+    Matrix *matrix = malloc(sizeof(Matrix) * rows * cols);
+    if (!matrix) {
+        printf("Can't allocate %zu bytes: %s.\n", sizeof(Matrix) * rows * cols, strerror(errno));
+        free_matrix(matrix);
+        return 0;
+    }
+    int n = 0;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            Matrix m = {.row = i, .col = j, .value = 0, .count = (size_t) (rows * cols)};
+            matrix[n] = m;
+            n++;
+        }
+    }
+    return matrix;
+}
 
 Matrix *create_matrix_from_file(FILE *file) {
     int rows, cols;
     assert(fscanf(file, "%d %d", &rows, &cols) == 2);
 
     Matrix *matrix = create_matrix(rows, cols);
+    if (!matrix) {
+        return 0;
+    }
+
     double value;
     int num, row, col;
     assert(fscanf(file, "%d", &num) == 1);
-    for (int i = 0; i < num; ++i) {
+    for (int i = 0; i < num; i++) {
         assert(fscanf(file, "%d %d %lf", &row, &col, &value) == 3);
         set_elem(matrix, row, col, value);
-    }
-    return matrix;
-}
-
-Matrix *create_matrix(int rows, int cols) {
-    Matrix *matrix = malloc(sizeof(Matrix) * rows * cols);
-    if (!matrix) {
-        printf("Can't allocate %zu bytes: %s.\n", sizeof(Matrix) * rows * cols, strerror(errno));
-        free(matrix);
-    } else {
-        int n = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                Matrix m = {.row = i, .col = j, .value = 0, .count = (size_t) (rows * cols)};
-                matrix[n] = m;
-                n++;
-            }
-        }
-
     }
     return matrix;
 }
@@ -73,6 +75,7 @@ int get_cols(Matrix *matrix) {
 }
 
 void print_matrix(Matrix *matrix) {
+    printf("Matrix from File: \n");
     int rows = get_rows(matrix);
     int cols = get_cols(matrix);
     int iter1 = 0;
@@ -108,11 +111,11 @@ void transpose(Matrix *matrix) {
         iter1 = rows;
         iter2 = cols;
     }
-    if (rows < cols) {
+    if (rows > cols) {
         iter1 = rows;
         iter2 = cols;
     }
-    if (rows > cols) {
+    if (rows < cols) {
         iter1 = cols;
         iter2 = rows;
     }
