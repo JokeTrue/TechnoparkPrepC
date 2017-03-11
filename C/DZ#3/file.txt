@@ -1,0 +1,11 @@
+human
+man
+robot
+male
+animal
+human
+bot
+rat
+robot
+rabbit
+human
