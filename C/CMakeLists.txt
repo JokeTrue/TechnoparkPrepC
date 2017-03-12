@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.6)
+project(C)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_FLAGS "-Wall -Wextra -Werror -O2 -g -std=c11")
+set(SOURCE_FILES "DZ#3/main.c" "DZ#3/words.c" "DZ#3/words.h")
+add_executable(C ${SOURCE_FILES})
