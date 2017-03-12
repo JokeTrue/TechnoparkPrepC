@@ -2,7 +2,7 @@
 #define _WORDS_H_
 
 #include <stdio.h>
-#include "../Challenge#2/list.h"
+#include "list.h"
 
 typedef struct word {
     char *word;

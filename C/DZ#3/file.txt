@@ -1,11 +1,3 @@
-human
-man
-robot
-male
-animal
-human
-bot
-rat
-robot
-rabbit
-human
+human,word,bot,animal,word,human,man,bot,man
+human word bot animal word human man bot man
+human.word.bot.animal.word.human.man.bot.man

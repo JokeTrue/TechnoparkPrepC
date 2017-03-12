@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <memory.h>
 #include <errno.h>
-#include "../Challenge#2/list.h"
+#include "list.h"
 #include "words.h"
 
 #define MAX_WORDS 1024

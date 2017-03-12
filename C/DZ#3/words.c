@@ -3,23 +3,31 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "../Challenge#2/list.h"
+#include "list.h"
 #include "words.h"
 
 void fill_from_file(list *list, FILE *fp, char **words) {
+    char c;
     char line[1024];
-    int n = 0;
-    while (fscanf(fp, "%1023s", line) == 1 && !is_separator(line[0])) {
-        words[n] = malloc((sizeof(line)));
-        strncpy(words[n], line, sizeof(line));
-        word_t *found = find(list, words[n]);
-        if (found) {
-            found->count++;
+    int n = 0, i = 0;
+    while (fscanf(fp, "%c", &c) == 1) {
+        if (!is_separator(c)) {
+            strcpy(&line[i], &c);
+            i++;
         } else {
-            word_t word = {.word = words[n], .count = 1};
-            append(list, &word);
+            strcpy(&line[i], "\0");
+            words[n] = malloc((sizeof(line)));
+            memcpy(words[n], line, sizeof(line));
+            word_t *found = find(list, words[n]);
+            if (found) {
+                found->count++;
+            } else {
+                word_t word = {.word = words[n], .count = 1};
+                append(list, &word);
+            }
+            n++;
+            i = 0;
         }
-        n++;
     }
 };
 
