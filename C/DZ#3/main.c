@@ -34,11 +34,11 @@ int main(int argc, char *argv[]) {
     sort_list(&list);
     fn_for_each(&list, (listIteratorFn) print_words);
 
-    destroy(&list);
     for (int i = 0; i < MAX_WORDS; i++) {
         free(words[i]);
     }
     free(words);
+    destroy(&list);
     fclose(fp);
     return EXIT_SUCCESS;
 }
