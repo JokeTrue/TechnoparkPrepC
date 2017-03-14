@@ -1,3 +1,5 @@
-human,word,bot,animal,word,human,man,bot,man
+humanoid,word,bot,animal,word,human,man,bot,man
 human word bot animal word human man bot man
 human.word.bot.animal.word.human.man.bot.man
+
+

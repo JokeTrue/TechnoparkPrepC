@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <errno.h>
 #include "list.h"
 #include "words.h"
 
@@ -15,18 +16,26 @@ void fill_from_file(list *list, FILE *fp, char **words) {
             strcpy(&line[i], &c);
             i++;
         } else {
-            strcpy(&line[i], "\0");
-            words[n] = malloc((sizeof(line)));
-            memcpy(words[n], line, sizeof(line));
-            word_t *found = find(list, words[n]);
-            if (found) {
-                found->count++;
-            } else {
-                word_t word = {.word = words[n], .count = 1};
-                append(list, &word);
+            if (i > 0) {
+                strcpy(&line[i], "\0");
+                words[n] = malloc((sizeof(line)));
+                if (!words[n]) {
+                    printf("Can't allocate %zu bytes: %s.\n", sizeof(line), strerror(errno));
+                    free(words[n]);
+                    i = 0;
+                    continue;
+                }
+                memcpy(words[n], line, sizeof(line));
+                word_t *found = find(list, words[n]);
+                if (found) {
+                    found->count++;
+                } else {
+                    word_t word = {.word = words[n], .count = 1};
+                    append(list, &word);
+                }
+                n++;
+                i = 0;
             }
-            n++;
-            i = 0;
         }
     }
 };

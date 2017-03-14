@@ -28,17 +28,23 @@ int main(int argc, char *argv[]) {
 
     list list;
     char **words = malloc(sizeof(char *) * MAX_WORDS);
+    if (!words) {
+        printf("Can't allocate %zu bytes: %s.\n", sizeof(char *) * MAX_WORDS, strerror(errno));
+        free(words);
+        fclose(fp);
+        return EXIT_FAILURE;
+    }
 
     create_list(&list, sizeof(word_t), NULL);
     fill_from_file(&list, fp, words);
     sort_list(&list);
     fn_for_each(&list, (listIteratorFn) print_words);
 
+    destroy(&list);
     for (int i = 0; i < MAX_WORDS; i++) {
         free(words[i]);
     }
     free(words);
-    destroy(&list);
     fclose(fp);
     return EXIT_SUCCESS;
 }
