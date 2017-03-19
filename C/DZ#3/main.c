@@ -4,10 +4,8 @@
 #include "list.h"
 #include "words.h"
 
-#define MAX_WORDS 1024
 
-
-bool print_words(word_t *data) {
+bool print_word(word_t *data) {
     printf("%s: [%d]\n", data->word, data->count);
     return true;
 }
@@ -26,7 +24,6 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    list list;
     char **words = malloc(sizeof(char *) * MAX_WORDS);
     if (!words) {
         printf("Can't allocate %zu bytes: %s.\n", sizeof(char *) * MAX_WORDS, strerror(errno));
@@ -35,10 +32,11 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    list list;
     create_list(&list, sizeof(word_t), NULL);
     fill_from_file(&list, fp, words);
     sort_list(&list);
-    fn_for_each(&list, (listIteratorFn) print_words);
+    fn_for_each(&list, (listIteratorFn) print_word);
 
     destroy(&list);
     for (int i = 0; i < MAX_WORDS; i++) {

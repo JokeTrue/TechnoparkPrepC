@@ -9,9 +9,13 @@
 
 void fill_from_file(list *list, FILE *fp, char **words) {
     char c;
-    char line[1024];
+    char line[256];
     int n = 0, i = 0;
     while (fscanf(fp, "%c", &c) == 1) {
+        if (n > MAX_WORDS) {
+            break;
+        }
+
         if (!is_separator(c)) {
             strcpy(&line[i], &c);
             i++;
@@ -25,6 +29,7 @@ void fill_from_file(list *list, FILE *fp, char **words) {
                     i = 0;
                     continue;
                 }
+
                 memcpy(words[n], line, sizeof(line));
                 word_t *found = find(list, words[n]);
                 if (found) {
@@ -33,6 +38,7 @@ void fill_from_file(list *list, FILE *fp, char **words) {
                     word_t word = {.word = words[n], .count = 1};
                     append(list, &word);
                 }
+                memset(&line, 0, sizeof(line));
                 n++;
                 i = 0;
             }

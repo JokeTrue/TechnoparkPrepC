@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "list.h"
 
+#define MAX_WORDS 1024
 typedef struct word {
     char *word;
     int count;
