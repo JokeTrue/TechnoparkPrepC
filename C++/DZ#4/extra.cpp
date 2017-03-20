@@ -46,12 +46,17 @@ void filter_by_faculty(Student *array, char *faculty) {
     }
 }
 
-//int cmp(const void *ptr1, const void *ptr2) {
-//    Student *st1 = *(Student **) ptr1;
-//    Student *st2 = *(Student **) ptr2;
-//    return strcmp(st1->get_faculty(), st2->get_faculty()) + (st1->get_course() < st2->get_course()) ? st2->get_course()
-//                                                                                                    : st1->get_course();
-//}
+int cmp(const void *ptr1, const void *ptr2) {
+    Student *st1 = (Student *) ptr1;
+    Student *st2 = (Student *) ptr2;
+    int result = (strcmp(st1->get_faculty(), st2->get_faculty()));
+    if (st1->get_course() < st2->get_course()) {
+        result += 1;
+    } else if (st1->get_course() > st2->get_course()) {
+        result += -1;
+    }
+    return result;
+}
 
 void filter_by_year(Student *array, int year) {
     cout << "Filtered by Year " << year << ":" << endl;
@@ -64,4 +69,24 @@ void filter_by_year(Student *array, int year) {
     }
 }
 
-void show_sorted(Student *array) {}
+void show_sorted(Student *array) {
+    size_t size = 0;
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (array[i].get_course() != 0) {
+            size++;
+        }
+    }
+    qsort(array, size, sizeof(Student), cmp);
+    for (int i = 0; i < size; i++) {
+        Student that = array[i];
+        that.show();
+        cout << endl;
+        Student next = array[i + 1];
+        if (strcmp(that.get_faculty(), next.get_faculty()) != 0) {
+            cout
+                    << "------------------------------------------------------------------------------------------------------------------\n"
+                    << endl;
+        }
+    }
+
+}

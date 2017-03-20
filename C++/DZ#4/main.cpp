@@ -19,7 +19,8 @@ int main(int argc, char *argv[]) {
 
     Student *array = fill_students(fp);
 //    filter_by_faculty(array, "IBM");
-    filter_by_year(array, 2000);
+//    filter_by_year(array, 2000);
+    show_sorted(array);
     fclose(fp);
     return EXIT_SUCCESS;
 }
