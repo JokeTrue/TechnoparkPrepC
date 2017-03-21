@@ -189,16 +189,14 @@ char *Student::get_adress() {
 }
 
 void Student::show() {
-    const char separator = ' ';
-    const int width = 25;
-    cout << left << setw(7) << setfill(separator) << this->get_name();
-    cout << left << setw(10) << setfill(separator) << "\t" << this->get_patronymic();
-    cout << left << setw(8) << setfill(separator) << "\t" << this->get_surname();
-    cout << left << setw(5) << setfill(separator) << "\t" << this->get_birthdate();
-    cout << left << setw(4) << setfill(separator) << "\t" << this->get_faculty();
-    cout << left << setw(2) << setfill(separator) << "\t" << this->get_course();
-    cout << left << setw(15) << setfill(separator) << "\t" << this->get_telephone();
-    cout << left << setw(20) << setfill(separator) << "\t" << this->get_adress();
+    cout << left << this->get_name() << ' ';
+    cout << left << this->get_patronymic() << ' ';
+    cout << left << this->get_surname() << ' ';
+    cout << left << this->get_birthdate() << ' ';
+    cout << left << this->get_faculty() << ' ';
+    cout << left << this->get_course() << ' ';
+    cout << left << this->get_telephone() << ' ';
+    cout << left << this->get_adress() << ' ';
 
 }
 

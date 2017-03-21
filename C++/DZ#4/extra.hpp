@@ -3,7 +3,7 @@
 
 #define ARRAY_SIZE 1024
 
-Student *fill_students(FILE *fp);
+Student *fill_students();
 
 void filter_by_faculty(Student *array, char *faculty);
 
