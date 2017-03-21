@@ -11,4 +11,6 @@ void filter_by_year(Student *array, int year);
 
 void show_sorted(Student *array);
 
+size_t length(Student *array);
+
 #endif //DZ_4_EXTRA_HPP

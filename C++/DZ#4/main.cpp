@@ -11,9 +11,9 @@ int main(int argc, char *argv[]) {
         cout << "Failed to fill array of Stundents" << endl;
         return EXIT_FAILURE;
     }
-    filter_by_faculty(array, "ИБМ");
+//    filter_by_faculty(array, "ИБМ");
 //    filter_by_year(array, 1994);
-//    show_sorted(array);
+    show_sorted(array);
     return EXIT_SUCCESS;
 }
 

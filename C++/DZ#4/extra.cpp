@@ -47,14 +47,8 @@ Student *fill_students() {
 }
 
 void filter_by_faculty(Student *array, char *faculty) {
-    size_t size = 0;
-    for (int i = 0; i < ARRAY_SIZE; i++) {
-        if (array[i].get_course() != 0) {
-            size++;
-        }
-    }
     cout << "Filtered by Faculty " << faculty << ":" << endl;
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length(array); i++) {
         Student that = array[i];
         if (strcmp(array[i].get_faculty(), faculty) == 0) {
             that.show();
@@ -76,14 +70,8 @@ int cmp(const void *ptr1, const void *ptr2) {
 }
 
 void filter_by_year(Student *array, int year) {
-    size_t size = 0;
-    for (int i = 0; i < ARRAY_SIZE; i++) {
-        if (array[i].get_course() != 0) {
-            size++;
-        }
-    }
     cout << "Filtered by Year " << year << ":" << endl;
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length(array); i++) {
         Student that = array[i];
         if (that.get_birthdate() > year) {
             that.show();
@@ -93,14 +81,8 @@ void filter_by_year(Student *array, int year) {
 }
 
 void show_sorted(Student *array) {
-    size_t size = 0;
-    for (int i = 0; i < ARRAY_SIZE; i++) {
-        if (array[i].get_course() != 0) {
-            size++;
-        }
-    }
-    qsort(array, size, sizeof(Student), cmp);
-    for (int i = 0; i < size; i++) {
+    qsort(array, length(array), sizeof(Student), cmp);
+    for (int i = 0; i < length(array); i++) {
         Student that = array[i];
         that.show();
         cout << endl;
@@ -113,4 +95,14 @@ void show_sorted(Student *array) {
             }
         }
     }
+}
+
+size_t length(Student* array) {
+    size_t size = 0;
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (array[i].get_course() != 0) {
+            size++;
+        }
+    }
+    return size;
 }
