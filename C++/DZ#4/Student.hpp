@@ -39,6 +39,22 @@ public:
 
     int get_course() const;
 
+    void set_faculty(char *new_faculty);
+
+    void set_name(char *new_name);
+
+    void set_patronymic(char *new_patr);
+
+    void set_surname(char *new_surname);
+
+    void set_birthdate(int new_birthdate);
+
+    void set_adress(char *new_adress);
+
+    void set_telephone(char *new_tel);
+
+    void set_course(int new_course);
+
 private:
     char *name;
     char *patronymic;

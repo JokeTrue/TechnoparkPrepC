@@ -2,6 +2,7 @@
 #define DZ_4_EXTRA_HPP
 
 #define ARRAY_SIZE 1024
+#define MAX_LINE 255
 
 Student *fill_students();
 

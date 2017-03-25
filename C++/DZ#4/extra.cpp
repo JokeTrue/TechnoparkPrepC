@@ -7,24 +7,25 @@
 Student *fill_students() {
     FILE *fp = fopen("/home/joketrue/Projects/TechnoparkPrepC/C++/DZ#4/students.txt", "r");
     if (fp == NULL) {
-        cout << "Unable to open %s: %s.\n" << endl;
+        cout << "Unable to open file." << endl;
         return nullptr;
     }
+
     Student *array = new(nothrow) Student[ARRAY_SIZE];
     if (array == nullptr) {
         fclose(fp);
         return nullptr;
     }
-    char *name = new char[255];
-    char *patronymic = new char[255];
-    char *surname = new char[255];
-    int birthdate = 0;
-    char *telephone = new char[255];
-    char *adress = new char[255];
-    char *faculty = new char[255];
-    int course;
-    int i = 0;
-    while (fscanf(fp, "%s %s %s %d %s %s %s %d", name, patronymic, surname, &birthdate, telephone, adress,
+
+    char *name = new char[MAX_LINE];
+    char *patronymic = new char[MAX_LINE];
+    char *surname = new char[MAX_LINE];
+    char *telephone = new char[MAX_LINE];
+    char *adress = new char[MAX_LINE];
+    char *faculty = new char[MAX_LINE];
+    int course = 0, birthdate = 0, i = 0;
+    while (fscanf(fp, "%254s %254s %254s %d %254s %254s %254s %d", name, patronymic, surname, &birthdate, telephone,
+                  adress,
                   faculty, &course) == 8) {
         if (i > ARRAY_SIZE) {
             break;
@@ -75,7 +76,6 @@ void filter_by_year(Student *array, int year) {
         Student that = array[i];
         if (that.get_birthdate() > year) {
             that.show();
-            cout << endl;
         }
     }
 }
@@ -85,19 +85,16 @@ void show_sorted(Student *array) {
     for (int i = 0; i < length(array); i++) {
         Student that = array[i];
         that.show();
-        cout << endl;
         Student next = array[i + 1];
         if (next.get_name() != nullptr) {
-
             if (strcmp(that.get_faculty(), next.get_faculty()) != 0 || that.get_course() != next.get_course()) {
-                cout
-                        << "------------------------------------------------------------------------------------------------------------------\n";
+                cout << "------------------------------------------------------------------\n";
             }
         }
     }
 }
 
-size_t length(Student* array) {
+size_t length(Student *array) {
     size_t size = 0;
     for (int i = 0; i < ARRAY_SIZE; i++) {
         if (array[i].get_course() != 0) {

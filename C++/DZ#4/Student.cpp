@@ -1,6 +1,5 @@
 #include <cstring>
 #include <iostream>
-#include <iomanip>
 #include "Student.hpp"
 
 using namespace std;
@@ -188,6 +187,7 @@ char *Student::get_adress() {
     return this->adress;
 }
 
+
 void Student::show() {
     cout << left << this->get_name() << ' ';
     cout << left << this->get_patronymic() << ' ';
@@ -197,7 +197,54 @@ void Student::show() {
     cout << left << this->get_course() << ' ';
     cout << left << this->get_telephone() << ' ';
     cout << left << this->get_adress() << ' ';
+    cout << endl;
 
+}
+
+void Student::set_faculty(char *new_faculty) {
+    if (strlen(new_faculty) + 1 <= strlen(this->faculty) + 1) {
+        this->faculty = new_faculty;
+    }
+
+}
+
+void Student::set_name(char *new_name) {
+    if (strlen(new_name) + 1 <= strlen(this->name) + 1) {
+        this->name = new_name;
+    }
+}
+
+void Student::set_patronymic(char *new_patr) {
+    if (strlen(new_patr) + 1 <= strlen(this->patronymic) + 1) {
+        this->patronymic = new_patr;
+    }
+}
+
+void Student::set_surname(char *new_surname) {
+    if (strlen(new_surname) + 1 <= strlen(this->surname) + 1) {
+        this->surname = new_surname;
+    }
+
+}
+
+void Student::set_birthdate(int new_birthdate) {
+    this->birthdate = new_birthdate;
+}
+
+void Student::set_adress(char *new_adress) {
+    if (strlen(new_adress) + 1 <= strlen(this->adress) + 1) {
+        this->adress = new_adress;
+    }
+}
+
+void Student::set_telephone(char *new_tel) {
+    if (strlen(new_tel) + 1 <= strlen(this->telephone) + 1) {
+        this->telephone = new_tel;
+    }
+}
+
+void Student::set_course(int new_course) {
+    this->course = new_course;
 }
 
 
