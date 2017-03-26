@@ -7,6 +7,7 @@ TwoWayLinkedList::TwoWayLinkedList() {
     size = 0;
 }
 
+
 TwoWayLinkedList::~TwoWayLinkedList() {
     Node *ptr = head;
     Node *ptrNext = ptr;
@@ -59,11 +60,10 @@ void TwoWayLinkedList::append(int element) {
 }
 
 void TwoWayLinkedList::display() {
-    Node *ptr;
-    if (head == nullptr) {
+    Node *ptr = head;
+    if (ptr == nullptr) {
         cout << "List is empty." << endl;
     }
-    ptr = head;
     while (ptr != nullptr) {
         cout << ptr->number << " <--> ";
         ptr = ptr->next;
@@ -74,6 +74,7 @@ void TwoWayLinkedList::display() {
 void TwoWayLinkedList::delete_by_index(int index) {
     Node *tmp, *ptr;
     if (head->index == index) {
+        this->_decrementIndexes(head);
         head = head->next;
         head->prev = nullptr;
         size--;
@@ -82,6 +83,7 @@ void TwoWayLinkedList::delete_by_index(int index) {
     ptr = head;
     while (ptr->next->next != nullptr) {
         if (ptr->next->index == index) {
+            this->_decrementIndexes(ptr->next->next);
             tmp = ptr->next;
             ptr->next = tmp->next;
             tmp->next->prev = ptr;
@@ -120,6 +122,18 @@ void TwoWayLinkedList::sort() {
 
 }
 
+TwoWayLinkedList &TwoWayLinkedList::operator=(const TwoWayLinkedList &rhs) {
+    for (int i = 0; i < this->size; i++) {
+        this->delete_by_index(i);
+    }
+    Node *ptr = rhs.head;
+    for (int i = 0; i < rhs.size; i++) {
+        this->append(ptr->number);
+        ptr = ptr->next;
+    }
+    return *this;
+}
+
 TwoWayLinkedList operator+(const TwoWayLinkedList &a, const TwoWayLinkedList &b) {
     TwoWayLinkedList newList;
     Node *ptrA = a.head;
@@ -140,4 +154,35 @@ TwoWayLinkedList operator+(const TwoWayLinkedList &a, const TwoWayLinkedList &b)
     }
     return newList;
 }
+
+void TwoWayLinkedList::_decrementIndexes(Node *start) {
+    Node *ptr = start;
+    while (ptr != nullptr) {
+        ptr->index--;
+        ptr = ptr->next;
+    }
+}
+
+Node *TwoWayLinkedList::find_by_index(int index) {
+    Node *ptr = head;
+    while (ptr != nullptr) {
+        if (ptr->index == index) {
+            return ptr;
+        }
+        ptr = ptr->next;
+    }
+    return nullptr;
+}
+
+TwoWayLinkedList::TwoWayLinkedList(const TwoWayLinkedList &rhs) {
+    Node *ptr = rhs.head;
+    for (int i = 0; i < rhs.size; i++) {
+        this->append(ptr->number);
+        ptr = ptr->next;
+    }
+
+}
+
+
+
 

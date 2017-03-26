@@ -12,6 +12,12 @@ class TwoWayLinkedList {
 public:
     TwoWayLinkedList();
 
+    TwoWayLinkedList(const TwoWayLinkedList &rhs);
+
+    TwoWayLinkedList &operator=(const TwoWayLinkedList &rhs);
+
+    friend TwoWayLinkedList operator+(const TwoWayLinkedList &a, const TwoWayLinkedList &b);
+
     ~TwoWayLinkedList();
 
     void add(int element);
@@ -22,14 +28,17 @@ public:
 
     void delete_by_index(int index);
 
+    Node *find_by_index(int index);
+
     void sort();
 
-    friend TwoWayLinkedList operator+(const TwoWayLinkedList &a, const TwoWayLinkedList &b);
 
 private:
     int size;
     Node *head;
     Node *tail;
+
+    void _decrementIndexes(Node *start);
 };
 
 

@@ -1,5 +1,3 @@
-
-#include <cstdlib>
 #include "TwoWayLinkedList.hpp"
 
 int main() {
@@ -7,6 +5,9 @@ int main() {
     for (int i = 0; i < 10; i++) {
         a.append(i);
     }
+//    TwoWayLinkedList b;
+//    b = a;
+//    b.display();
     TwoWayLinkedList b;
     for (int i = 10; i < 20; i++) {
         b.append(i);
@@ -14,5 +15,5 @@ int main() {
     TwoWayLinkedList merged = a + b;
     merged.sort();
     merged.display();
-    return EXIT_SUCCESS;
+    return 0;
 }
