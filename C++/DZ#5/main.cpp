@@ -14,6 +14,7 @@ int main() {
     }
     TwoWayLinkedList merged = a + b;
     merged.sort();
+    merged.delete_by_index(5);
     merged.display();
     return 0;
 }

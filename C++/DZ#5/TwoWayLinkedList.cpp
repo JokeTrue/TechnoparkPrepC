@@ -74,10 +74,12 @@ void TwoWayLinkedList::display() {
 void TwoWayLinkedList::delete_by_index(int index) {
     Node *tmp, *ptr;
     if (head->index == index) {
+        tmp = head;
         this->_decrementIndexes(head);
         head = head->next;
         head->prev = nullptr;
         size--;
+        delete tmp;
         return;
     }
     ptr = head;
@@ -88,12 +90,13 @@ void TwoWayLinkedList::delete_by_index(int index) {
             ptr->next = tmp->next;
             tmp->next->prev = ptr;
             size--;
+            delete tmp;
             return;
         }
         ptr = ptr->next;
     }
     if (ptr->next->index == index) {
-        ptr->next = nullptr;
+        delete ptr->next;
         size--;
         return;
 
