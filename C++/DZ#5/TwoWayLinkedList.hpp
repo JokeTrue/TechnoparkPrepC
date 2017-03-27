@@ -12,13 +12,13 @@ class TwoWayLinkedList {
 public:
     TwoWayLinkedList();
 
+    ~TwoWayLinkedList();
+
     TwoWayLinkedList(const TwoWayLinkedList &rhs);
 
     TwoWayLinkedList &operator=(const TwoWayLinkedList &rhs);
 
     friend TwoWayLinkedList operator+(const TwoWayLinkedList &a, const TwoWayLinkedList &b);
-
-    ~TwoWayLinkedList();
 
     void add(int element);
 

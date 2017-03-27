@@ -7,7 +7,6 @@ TwoWayLinkedList::TwoWayLinkedList() {
     size = 0;
 }
 
-
 TwoWayLinkedList::~TwoWayLinkedList() {
     Node *ptr = head;
     Node *ptrNext = ptr;
@@ -21,16 +20,66 @@ TwoWayLinkedList::~TwoWayLinkedList() {
     }
 }
 
+TwoWayLinkedList::TwoWayLinkedList(const TwoWayLinkedList &rhs) {
+    Node *ptr = rhs.head;
+    for (int i = 0; i < rhs.size; i++) {
+        this->append(ptr->number);
+        ptr = ptr->next;
+    }
+
+}
+
+TwoWayLinkedList &TwoWayLinkedList::operator=(const TwoWayLinkedList &rhs) {
+    for (int i = 0; i < this->size; i++) {
+        this->delete_by_index(i);
+    }
+    Node *ptr = rhs.head;
+    for (int i = 0; i < rhs.size; i++) {
+        this->append(ptr->number);
+        ptr = ptr->next;
+    }
+    return *this;
+}
+
+TwoWayLinkedList operator+(const TwoWayLinkedList &a, const TwoWayLinkedList &b) {
+    TwoWayLinkedList newList;
+    Node *ptrA = a.head;
+    for (int i = 0; i < a.size; i++) {
+        if (ptrA == nullptr) {
+            break;
+        }
+        newList.append(ptrA->number);
+        ptrA = ptrA->next;
+    }
+    Node *ptrB = b.head;
+    for (int i = 0; i < b.size; i++) {
+        if (ptrB == nullptr) {
+            break;
+        }
+        newList.append(ptrB->number);
+        ptrB = ptrB->next;
+    }
+    return newList;
+}
+
 void TwoWayLinkedList::add(int element) {
     if (size == 0) {
-        Node *tmp = new Node();
+        Node *tmp = new(nothrow) Node();
+        if (tmp == nullptr) {
+            cout << "Failed to create a new Node" << endl;
+            return;
+        }
         tmp->index = 0;
         tmp->number = element;
         head = tmp;
         tail = tmp;
         size++;
     } else {
-        Node *tmp = new Node();
+        Node *tmp = new(nothrow) Node();
+        if (tmp == nullptr) {
+            cout << "Failed to create a new Node" << endl;
+            return;
+        }
         tmp->index = size;
         tmp->number = element;
         head->prev = tmp;
@@ -42,14 +91,22 @@ void TwoWayLinkedList::add(int element) {
 
 void TwoWayLinkedList::append(int element) {
     if (size == 0) {
-        Node *tmp = new Node();
+        Node *tmp = new(nothrow) Node();
+        if (tmp == nullptr) {
+            cout << "Failed to create a new Node" << endl;
+            return;
+        }
         tmp->index = 0;
         tmp->number = element;
         head = tmp;
         tail = tmp;
         size++;
     } else {
-        Node *tmp = new Node();
+        Node *tmp = new(nothrow) Node();
+        if (tmp == nullptr) {
+            cout << "Failed to create a new Node" << endl;
+            return;
+        }
         tmp->index = size;
         tmp->number = element;
         tail->next = tmp;
@@ -125,38 +182,6 @@ void TwoWayLinkedList::sort() {
 
 }
 
-TwoWayLinkedList &TwoWayLinkedList::operator=(const TwoWayLinkedList &rhs) {
-    for (int i = 0; i < this->size; i++) {
-        this->delete_by_index(i);
-    }
-    Node *ptr = rhs.head;
-    for (int i = 0; i < rhs.size; i++) {
-        this->append(ptr->number);
-        ptr = ptr->next;
-    }
-    return *this;
-}
-
-TwoWayLinkedList operator+(const TwoWayLinkedList &a, const TwoWayLinkedList &b) {
-    TwoWayLinkedList newList;
-    Node *ptrA = a.head;
-    for (int i = 0; i < a.size; i++) {
-        if (ptrA == nullptr) {
-            break;
-        }
-        newList.append(ptrA->number);
-        ptrA = ptrA->next;
-    }
-    Node *ptrB = b.head;
-    for (int i = 0; i < b.size; i++) {
-        if (ptrB == nullptr) {
-            break;
-        }
-        newList.append(ptrB->number);
-        ptrB = ptrB->next;
-    }
-    return newList;
-}
 
 void TwoWayLinkedList::_decrementIndexes(Node *start) {
     Node *ptr = start;
@@ -177,14 +202,7 @@ Node *TwoWayLinkedList::find_by_index(int index) {
     return nullptr;
 }
 
-TwoWayLinkedList::TwoWayLinkedList(const TwoWayLinkedList &rhs) {
-    Node *ptr = rhs.head;
-    for (int i = 0; i < rhs.size; i++) {
-        this->append(ptr->number);
-        ptr = ptr->next;
-    }
 
-}
 
 
 
