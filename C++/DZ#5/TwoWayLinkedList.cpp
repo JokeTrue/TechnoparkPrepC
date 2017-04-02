@@ -161,6 +161,17 @@ void TwoWayLinkedList::delete_by_index(int index) {
     cout << "Not Found" << endl;
 }
 
+Node *TwoWayLinkedList::find_by_index(int index) {
+    Node *ptr = head;
+    while (ptr != nullptr) {
+        if (ptr->index == index) {
+            return ptr;
+        }
+        ptr = ptr->next;
+    }
+    return nullptr;
+}
+
 void TwoWayLinkedList::sort() {
     Node *tmpPtr = head;
     Node *tmpNext = head->next;
@@ -182,7 +193,6 @@ void TwoWayLinkedList::sort() {
 
 }
 
-
 void TwoWayLinkedList::_decrementIndexes(Node *start) {
     Node *ptr = start;
     while (ptr != nullptr) {
@@ -191,16 +201,6 @@ void TwoWayLinkedList::_decrementIndexes(Node *start) {
     }
 }
 
-Node *TwoWayLinkedList::find_by_index(int index) {
-    Node *ptr = head;
-    while (ptr != nullptr) {
-        if (ptr->index == index) {
-            return ptr;
-        }
-        ptr = ptr->next;
-    }
-    return nullptr;
-}
 
 
 
