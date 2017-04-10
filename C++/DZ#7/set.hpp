@@ -4,12 +4,10 @@
 #include <iostream>
 
 using std::ostream;
-using std::istream;
 
 template<class T>
 class Set {
 private:
-
     int _capacity;
 
     int _size;
@@ -50,21 +48,23 @@ public:
 
     Set(int s = 0);
 
-    Set(const T *arr, int n);
+    Set(T *arr, int n);
 
     Set(const Set &s);
 
     Set(const T &d);
 
+    Set(Set<T> &&other);
+
+    Set &operator=(Set<T> &&other);
+
     ~Set();
 
-    Set &operator=(const Set &s);
+    bool is_in(T &d) const;
 
-    bool is_in(const T &d) const;
+    bool insert(T &d);
 
-    bool insert(const T &d);
-
-    bool erase(const T &d);
+    bool erase(T &d);
 
     bool full() const;
 
@@ -74,15 +74,15 @@ public:
 
     int size() const;
 
+    Set &operator=(const Set &s);
+
     Set &operator+=(const Set &v);
 
     Set &operator-=(const Set &v);
 
+    ostream &operator<<(ostream &ost);
+
     bool compare(const Set &v) const;
-
-    void print(ostream &ost) const;
-
-    void scan(istream &ist);
 
 };
 
@@ -91,12 +91,6 @@ bool operator==(const Set<T> &v1, const Set<T> &v2);
 
 template<class T>
 bool operator!=(const Set<T> &v1, const Set<T> &v2);
-
-template<class T>
-ostream &operator<<(ostream &ost, const Set<T> &v);
-
-template<class T>
-istream &operator>>(istream &ist, Set<T> &v);
 
 template<class T>
 Set<T> operator+(const Set<T> &v1, const Set<T> &v2);
@@ -144,7 +138,7 @@ Set<T>::Set(const T &d) {
 }
 
 template<class T>
-Set<T>::Set(const T *arr, int n) {
+Set<T>::Set(T *arr, int n) {
     _capacity = n;
     _size = 0;
     buffer = new T[n];
@@ -249,39 +243,17 @@ bool operator!=(const Set<T> &s1, const Set<T> &s2) {
 }
 
 template<class T>
-void Set<T>::print(ostream &ost) const {
+ostream &Set<T>::operator<<(ostream &ost) {
     ost << "( ";
-
-    for (int i = 0; i < _size; i++)
+    for (int i = 0; i < _size; i++) {
         ost << buffer[i] << " ";
+    }
     ost << ")";
-}
-
-template<class T>
-ostream &operator<<(ostream &ost, const Set<T> &s) {
-    s.print(ost);
     return ost;
 }
 
 template<class T>
-void Set<T>::scan(istream &ist) {
-    T d;
-
-
-    while (!ist.eof() && !full()) {
-        ist >> d;
-        insert(d);
-    }
-}
-
-template<class T>
-istream &operator>>(istream &ist, Set<T> &s) {
-    s.scan(ist);
-    return ist;
-}
-
-template<class T>
-bool Set<T>::is_in(const T &d) const {
+bool Set<T>::is_in(T &d) const {
     for (int i = 0; i < _size; i++) {
         if (buffer[i] == d) {
             return true;
@@ -301,7 +273,7 @@ bool Set<T>::empty() const {
 }
 
 template<class T>
-bool Set<T>::insert(const T &d) {
+bool Set<T>::insert(T &d) {
     if (!is_in(d) && !full()) {
         buffer[_size++] = d;
         return true;
@@ -310,7 +282,7 @@ bool Set<T>::insert(const T &d) {
 }
 
 template<class T>
-bool Set<T>::erase(const T &d) {
+bool Set<T>::erase(T &d) {
     if (is_in(d)) {
         int i = find(d);
         for (int j = i; j < _size; j++) {
@@ -379,6 +351,34 @@ T &Set<T>::front() const {
 template<class T>
 T &Set<T>::back() const {
     return buffer[_size - 1];
+}
+
+template<class T>
+Set<T>::Set(Set<T> &&other) :
+        _capacity(0), _size(0), buffer(nullptr) {
+    _capacity = other._capacity;
+    _size = other._size;
+    buffer = other.buffer;
+
+    other._capacity = 0;
+    other._size = 0;
+    other.buffer = nullptr;
+}
+
+template<class T>
+Set<T> &Set<T>::operator=(Set<T> &&other) {
+    if (this != &other) {
+        delete[] buffer;
+
+        _capacity = other._capacity;
+        _size = other._size;
+        buffer = other.buffer;
+
+        other._capacity = 0;
+        other._size = 0;
+        other.buffer = nullptr;
+    }
+    return *this;
 }
 
 

@@ -73,10 +73,25 @@ int String::length() const {
     return _length;
 }
 
-void *String::display() const {
-    std::cout << _string << std::endl;
+char & String::operator[] (unsigned int x)
+{
+    return _string[x];
 }
 
+ostream &operator<<(ostream &ost, const String &s) {
+    ost << s._string;
+    return ost;
+}
 
-
-
+bool operator==(const String &s, const String &t) {
+    if (s.length() != t.length()) {
+        return false;
+    } else {
+        for (int i = 0; i < s.length(); i++) {
+            if (s._string[i] != t._string[i]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
