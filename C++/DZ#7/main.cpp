@@ -7,11 +7,16 @@ using std::cout;
 using std::endl;
 
 int main() {
-    String arr[] = {"Hello", "Human", "Bye", "Wonderful", "Human", "Hello"};
-    Set<String> SSet(arr, ARRAYSIZE(arr));
+    String arr1[] = {"Hello", "Human", "Bye", "Wonderful", "Human", "Hello"};
+    String arr2[] = {"Bye", "Hello", "Human", "Wonderful"};
 
-    for (auto obj: SSet) {
-        cout << obj << endl;
+    Set<String> SSet1(arr1, ARRAYSIZE(arr1));
+    Set<String> SSet2(arr1, ARRAYSIZE(arr2));
+
+    if (SSet1 == SSet2) {
+        for (auto obj: SSet1) {
+            cout << obj << endl;
+        }
     }
     return 0;
 }

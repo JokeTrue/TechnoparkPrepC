@@ -31,6 +31,8 @@ public:
 
     T &back();
 
+    T &operator[](unsigned int index);
+
     typedef T *const_iterator;
 
     const_iterator begin() const;
@@ -42,7 +44,7 @@ public:
     T &back() const;
 
 
-    T &operator[](unsigned int index);
+    T &operator[](unsigned int index) const;
 
 public:
 
@@ -354,6 +356,11 @@ T &Set<T>::back() const {
 }
 
 template<class T>
+T &Set<T>::operator[](unsigned int index) const {
+    return buffer[index];
+}
+
+template<class T>
 Set<T>::Set(Set<T> &&other) :
         _capacity(0), _size(0), buffer(nullptr) {
     _capacity = other._capacity;
@@ -380,6 +387,5 @@ Set<T> &Set<T>::operator=(Set<T> &&other) {
     }
     return *this;
 }
-
 
 #endif
