@@ -26,8 +26,6 @@ public:
 
     int length() const;
 
-    void *display() const;
-
     friend ostream &operator<<(ostream &ost, const String &s);
 
 private:
