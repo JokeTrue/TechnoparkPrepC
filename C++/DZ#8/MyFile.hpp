@@ -8,8 +8,6 @@
 #include <vector>
 
 class MyFile {
-    typedef int Key;
-    typedef std::vector<std::string> Value;
 public:
     MyFile();
 
@@ -17,15 +15,20 @@ public:
 
     ~MyFile() = default;
 
-    void add_word(std::string *word, Key sentence_num);
+    MyFile(MyFile const &) = delete;
+
+    void operator=(MyFile const &x) = delete;
+
+    MyFile(MyFile &&) = delete;
+
+    bool process();
 
     double calculate(const std::string *word);
 
-    void display();
-
 private:
-    std::string *path;
-    std::unordered_map<Key, Value> *words;
+    const std::string *path;
+    std::vector<std::string> *words;
+    int sentences;
 
 };
 

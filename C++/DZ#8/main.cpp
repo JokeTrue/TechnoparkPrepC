@@ -10,8 +10,12 @@ int main(int argc, char *argv[]) {
 
     const std::string *path = new std::string(argv[1]);
     const std::string *word = new std::string(argv[2]);
+
     MyFile mf(path);
-    std::cout << "Среднее количество вхождение слова в документе = "  << mf.calculate(word) << std::endl;
-//    mf.display();
+    if (mf.process()) {
+        std::cout << "Среднее значение вхождения слова в документе = "  << mf.calculate(word) << std::endl;
+    } else {
+        std::cerr << "Error occurred during processing stage" << std::endl;
+    }
     return 0;
 }

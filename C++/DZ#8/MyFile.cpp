@@ -1,82 +1,74 @@
-#include    <fstream>
+#include  <fstream>
 #include <vector>
 #include "MyFile.hpp"
 #include <boost/algorithm/string.hpp>
 
 MyFile::MyFile() :
         path(nullptr),
-        words(nullptr) {
-
+        words(nullptr),
+        sentences(0) {
+    words = new std::vector<std::string>;
 }
 
 MyFile::MyFile(const std::string *path) :
-        words(nullptr) {
-    words = new std::unordered_map<int, std::vector<std::string>>;
-
-    std::ifstream file(*path);
-    int sentence_count = 0;
-    for (std::string line; std::getline(file, line);) {
-        std::vector<std::string> sentence_vec;
-        boost::split(sentence_vec, line, boost::is_any_of(".!?"));
-        for (auto sentence: sentence_vec) {
-            std::vector<std::string> words_vec;
-            int spaces = 0;
-            for (auto character: sentence) {
-                if (std::isspace(character)) {
-                    spaces++;
-                }
-            }
-            if (spaces > 0) {
-                boost::split(words_vec, sentence, boost::is_any_of(" "));
-                for (auto word: words_vec) {
-                    if (!word.empty()) {
-                        add_word(&word, sentence_count);
-//                        std::cout << word << std::endl;
-                    }
-                }
-            } else {
-                if (!sentence.empty()) {
-                    add_word(&sentence, sentence_count);
-//                    std::cout << sentence << std::endl;
-                }
-            }
-            sentence_count++;
-//            std::cout << "-----------------" << std::endl;
-        }
-    }
-}
-
-void MyFile::add_word(std::string *word, Key sentence_num) {
-    if (words->find(sentence_num) == words->end()) {
-        std::vector<std::string> words_vector;
-        words_vector.push_back(*word);
-        words->insert(std::make_pair(sentence_num, words_vector));
-    } else {
-        words->at(sentence_num).push_back(*word);
-    }
-}
-
-void MyFile::display() {
-    for (auto it = words->begin(); it != words->end();) {
-        for (auto obj: it->second) {
-            std::cout << obj << std::endl;
-        }
-        ++it;
-    }
+        path(path),
+        words(nullptr),
+        sentences(0) {
+    words = new std::vector<std::string>;
 }
 
 double MyFile::calculate(const std::string *word) {
-    double N = (double) words->size();
-    double count = 0;
+    if (words != nullptr) {
+        double count = 0;
 
-    for (auto it = words->begin(); it != words->end();) {
-        for (auto obj: it->second) {
-            if (*word == obj) {
+        for (auto it = words->begin(); it != words->end(); ++it) {
+            if (boost::iequals(*word, *it)) {
                 count++;
             }
         }
-        ++it;
+        return (count / sentences);
+    } else {
+        return -1;
     }
+}
 
-    return (count / N);
+bool MyFile::process() {
+    try {
+        std::ifstream file(*this->path);
+
+        for (std::string line; std::getline(file, line);) {
+            std::vector<std::string> sentence_vec;
+
+            boost::split(sentence_vec, line, boost::is_any_of(".!?"));
+            sentence_vec.erase(std::remove_if(sentence_vec.begin(), sentence_vec.end(),
+                                              [](const std::string &s) { return s.find("", 0); }));
+
+            for (auto sentence: sentence_vec) {
+                std::vector<std::string> words_vec;
+
+                int spaces = 0;
+                for (auto character: sentence) {
+                    if (std::isspace(character)) {
+                        spaces++;
+                    }
+                }
+                if (spaces > 0) {
+                    boost::split(words_vec, sentence, boost::is_any_of(" "));
+                    for (auto word: words_vec) {
+                        if (!word.empty()) {
+                            words->push_back(word);
+                        }
+                    }
+                } else {
+                    if (!sentence.empty()) {
+                        words->push_back(sentence);
+                    }
+                }
+            }
+            sentences += sentence_vec.size();
+        }
+    } catch (const std::exception &exc) {
+        return false;
+    }
+    return true;
 }
